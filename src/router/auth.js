@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
         const { firstName, lastName, email, profileURL } = userData;
         res.status(200).send({ firstName, lastName, email, profileURL });
       } else {
-        res.status(400).send("Wrong User Credentials");
+        res.status(400).send({ err: "Wrong User Credentials" });
       }
     }
   } catch (error) {
