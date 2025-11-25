@@ -11,8 +11,8 @@ router.get("/user/requests", auth, async (req, res) => {
       toUser: _id,
       status: "interested",
     }).populate("fromUser", ["firstName", "lastName", "profileURL"]);
-    const jsonData = requestsList.map((items) => items.fromUser);
-    res.json({ data: jsonData });
+    const data = requestsList.map((items) => items.fromUser);
+    res.json({ data });
   } catch (error) {
     throw new Error("MESSAGE: ", error.message);
   }
