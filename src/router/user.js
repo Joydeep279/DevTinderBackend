@@ -47,7 +47,7 @@ router.get("/feed", auth, async (req, res) => {
   try {
     const { _id } = req.userData;
     const page = parseInt(req.params.page) || 1;
-    const limit = parseInt(req.params.limit) || 10;
+    const limit = parseInt(req.params.limit) || 15;
     const skipValue = (page - 1) * limit;
     const newLimit = limit > 50 || limit < 0 ? 50 : limit;
 

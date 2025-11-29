@@ -35,6 +35,10 @@ router.post("/signup", async (req, res) => {
   try {
     const userCredentials = signupValidator(req.body);
     const user = new User(userCredentials);
+    const token = user.generateToken();
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 168 * 3600000),
+    });
     await user.save();
     res.status(200).send(user);
   } catch (error) {
