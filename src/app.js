@@ -20,7 +20,7 @@ app.use("/", user);
 
 connectDB()
   .then(() => {
-    app.listen(8080, () => {
+    app.listen(7777, () => {
       console.log("Server Started Successfully!");
     });
   })
