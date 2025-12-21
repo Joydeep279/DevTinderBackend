@@ -2,6 +2,7 @@ const Connection = require("../configs/connectionSchema");
 const User = require("../configs/databaseSchema");
 const auth = require("../middlewares/auth");
 const express = require("express");
+const { run } = require("../utils/emailService");
 
 const router = express.Router();
 router.post("/request/:status/:toUser", auth, async (req, res) => {
@@ -33,7 +34,7 @@ router.post("/request/:status/:toUser", auth, async (req, res) => {
 
     const document = new Connection({ fromUser, toUser, status });
     await document.save();
-
+    
     return res.json({ message: `${status} request sent successfully` });
   } catch (error) {
     return res.status(500).json({ error: error.message });

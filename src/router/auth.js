@@ -4,7 +4,6 @@ const User = require("../configs/databaseSchema");
 const { signupValidator } = require("../middlewares/validator");
 const auth = require("../middlewares/auth");
 const jwt = require("jsonwebtoken");
-const { jwtPrivateKey } = require("../utils/constants");
 const { hash } = require("bcrypt");
 
 router.post("/login", async (req, res) => {

@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const { isEmail, isURL } = require("validator");
-const { jwtPrivateKey } = require("../utils/constants");
 const jwt = require("jsonwebtoken");
-const { compare, compareSync } = require("bcrypt");
+const { compareSync } = require("bcrypt");
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -44,7 +43,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 userSchema.methods.generateToken = function () {
-  return jwt.sign({ _id: this._id }, jwtPrivateKey, {
+  return jwt.sign({ _id: this._id }, process.env.jwtPrivateKey, {
     expiresIn: "7d",
   });
 };

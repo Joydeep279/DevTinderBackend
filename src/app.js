@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const { connectDB } = require("./configs/database");
@@ -9,7 +10,7 @@ const profile = require("./router/profile");
 const router = require("./router/request");
 const user = require("./router/user");
 
-app.use(cors({ origin: "http://localhost:7777", credentials: true }));
+app.use(cors({ origin: process.env.FrontendURL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -20,7 +21,7 @@ app.use("/", user);
 
 connectDB()
   .then(() => {
-    app.listen(7777, () => {
+    app.listen(process.env.PORT, () => {
       console.log("Server Started Successfully!");
     });
   })
