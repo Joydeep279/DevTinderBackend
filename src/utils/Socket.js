@@ -1,26 +1,26 @@
-const Socket = require("socket.io");
-function initialiseSocket(httpServer) {
-  const io = Socket(httpServer, {
+const socket = require("socket.io");
+
+const initialiseSocket = (server) => {
+  const io = socket(server, {
     cors: {
       origin: process.env.FrontendURL,
     },
   });
 
-  io.on("connection", (socket) => {
-    socket.on("joinChat", ({ fromUserId, toUserId }) => {
-      const roomId = [fromUserId, toUserId].sort().join("_");
-      socket.join(roomId);
+  io.on("connect", (socket) => {
+    socket.on("joinChat", ({ toUserId, fromUserId }) => {
+      const uniqueRoomId = [toUserId, fromUserId].sort().join("-");
+      socket.join(uniqueRoomId);
     });
-    socket.on("sendMsg", ({ fromUserName, fromUserId, toUserId, msg }) => {
-      const roomId = [fromUserId, toUserId].sort().join("_");
-      io.to(roomId).emit("RecievedMsg", {
-        name: fromUserName,
-        fromUserId,
-        toUserId,
-        msg,
-      });
+    socket.on("sendMsg", ({ name, toUserId, fromUserId, sendMsg }) => {
+      const uniqueRoomId = [toUserId, fromUserId].sort().join("-");
+      socket.to(uniqueRoomId).emit("roomMsg", { name, sendMsg });
     });
-    socket.on("leaveChat", () => {});
+    socket.on("leaveChat", () => {
+      
+    });
   });
-}
-module.exports = { initialiseSocket };
+
+  return io;
+};
+module.exports = initialiseSocket;
